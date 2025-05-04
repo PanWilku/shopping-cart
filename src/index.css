@@ -3,7 +3,7 @@
 
 
 .card {
-  @apply bg-white shadow-md rounded-lg p-4 aspect-2/3 w-32;
+  @apply bg-white shadow-md rounded-lg p-4 aspect-2/3 w-full h-120 flex flex-col justify-between;
 }
 
 .navbar {
@@ -12,4 +12,26 @@
 
 .navbar__links {
   @apply flex gap-4;
+}
+
+.carousel {
+  @apply flex h-[920px] w-full bg-red-300 gap-4 overflow-x-auto;
+}
+
+.shopping-section {
+  @apply flex flex-col gap-4 w-full h-full bg-emerald-400 p-4 items-center;
+}
+
+@layer components {
+  .card-overlay {
+    @apply
+      absolute bottom-0 left-0
+      w-full h-0
+      bg-black/50 text-white
+      flex items-center justify-center
+      rounded-b-md
+      overflow-hidden
+      transition-[height] duration-500 ease-out
+      group-hover:h-1/4;
+  }
 }
