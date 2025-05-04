@@ -5,3 +5,11 @@
 .card {
   @apply bg-white shadow-md rounded-lg p-4 aspect-2/3 w-32;
 }
+
+.navbar {
+  @apply flex w-full text-2xl h-32 bg-gray-800 text-white p-4 justify-between items-center;
+}
+
+.navbar__links {
+  @apply flex gap-4;
+}
