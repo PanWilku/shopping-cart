@@ -3,7 +3,7 @@
 
 
 .card {
-  @apply bg-white shadow-md rounded-lg p-4 aspect-2/3 w-full h-120 flex flex-col justify-between;
+  @apply bg-white shadow-2xl rounded-lg p-4 aspect-2/3 w-full h-120 flex flex-col justify-between;
 }
 
 .navbar {
@@ -19,7 +19,7 @@
 }
 
 .shopping-section {
-  @apply flex flex-col gap-4 w-full h-full bg-emerald-400 p-4 items-center;
+  @apply flex flex-col gap-4 w-full h-full bg-gray-200 p-4 items-center;
 }
 
 @layer components {
@@ -35,3 +35,17 @@
       group-hover:h-1/4;
   }
 }
+
+
+@layer components {
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    @apply appearance-none m-0;
+  }
+  input[type=number] {
+    /* Firefox */
+    -moz-appearance: textfield;
+  }
+}
+
+
