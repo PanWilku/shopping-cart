@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 
 
@@ -11,11 +12,11 @@
 }
 
 .navbar__links {
-  @apply flex gap-4;
+  @apply flex gap-4 justify-center items-center;
 }
 
 .carousel {
-  @apply flex h-[920px] w-full bg-red-300 gap-4 overflow-x-auto;
+  @apply flex h-[920px] w-full bg-amber-300 gap-4 overflow-x-auto;
 }
 
 .shopping-section {

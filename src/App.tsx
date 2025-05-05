@@ -3,6 +3,7 @@ import NavBar from './NavBar'
 import Carousel from './Carousel'
 import ShoppingSection from './ShoppingSection'
 import type { Fetching } from './types/fetching'
+import Footer from './Footer'
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
         <NavBar></NavBar>
         <Carousel></Carousel>
         <ShoppingSection {...fetchingData}></ShoppingSection>
+        <Footer></Footer>
       </div>
     </>
   )

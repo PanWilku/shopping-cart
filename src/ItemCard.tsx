@@ -16,7 +16,7 @@ export default function ItemCard({ item }: ItemCardProps) {
     }
   }
 
-  function handleDecrease(e: any) {
+  function handleDecrease() {
     setQuantity((prev) => (parseInt(prev) - 1).toString());
     if (parseInt(quantity) <= 1) {
       setQuantity("1");
@@ -50,7 +50,7 @@ export default function ItemCard({ item }: ItemCardProps) {
 
         <div className="card-overlay flex flex-col gap-2">
           <div className="flex w-full items-center gap-4 justify-between">
-            <button className="ml-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex" onClick={(e) => handleDecrease(e)}>-</button>
+            <button className="ml-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex" onClick={handleDecrease}>-</button>
             <input className="flex w-24 justify- text-center focus:outline-none border-2 rounded-md"
              type="number" onChange={(e) => handleInput(e)} value={quantity}></input>
             <button className="mr-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex" onClick={handleIncrease}>+</button>
