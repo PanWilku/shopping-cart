@@ -10,7 +10,7 @@ function NavBar() {
         <li><a href="#services">Services</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#cart">
-          <img src={cart} className="w-12 bg-amber-300"></img></a></li>
+          <img src={cart} className="w-12 bg-amber-300 rounded-md"></img></a></li>
       </ul>
     </nav>
   );

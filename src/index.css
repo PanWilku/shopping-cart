@@ -20,7 +20,7 @@
 }
 
 .shopping-section {
-  @apply flex flex-col gap-4 w-full h-full bg-gray-200 p-4 items-center;
+  @apply flex flex-col gap-4 w-full h-full bg-gray-200 pr-4 pb-4 pt-4 items-center;
 }
 
 @layer components {
