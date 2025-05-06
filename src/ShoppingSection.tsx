@@ -3,6 +3,7 @@ import type { Fetching } from './types/fetching'
 import arrowright from "../public/arrow-right.svg"
 import arrowleft from "../public/arrow-left.svg"
 import { useState } from "react";
+import PriceSlider from "./PriceSlider";
 
 
 
@@ -11,6 +12,16 @@ function ShoppingSection({products, loading, error}: Fetching) {
 
     const [showFilter, setShowFilter] = useState(false);
     const [hidden, setHidden] = useState(true);
+
+    const [category, setCategory] = useState<string[]>([]);
+    products.map((item) => {
+        if(category.includes(item.category)) {
+            return;
+        } else {
+            setCategory([...category, item.category]);
+        }});
+
+
     function handleFilterClick() {
         setShowFilter(!showFilter);
 
@@ -45,10 +56,10 @@ function ShoppingSection({products, loading, error}: Fetching) {
     <div className="shopping-section">
       <h2 className="text-5xl">Shopping Section</h2>
 
-        <div className="flex flex-row">
+        <div className="flex flex-row w-full">
             {hidden && (
-            <div className="w-12 h-full relative items-center flex">
-                <div className="group flex w-6 h-4/5 bg-white border-r-4 border-t-4 border-b-4
+            <div className="w-12 h-full relative flex">
+                <div className="group flex w-6 h-2/5 bg-white border-r-4 border-t-4 border-b-4
                 border-amber-300 rounded-r-md items-center hover:w-12 transition-[width] duration-500 ease-in-out
                 cursor-pointer" onClick={() => handleFilterClick()}>
                     <img className="absolute left-1 group-hover:left-7 transition-[left] group-hover:scale-120 duration-500 ease-in-out w-12 h-12" src={arrowright}></img>
@@ -57,16 +68,34 @@ function ShoppingSection({products, loading, error}: Fetching) {
             )}
 
                         
-        <div className={`flex w-0 relative h-full
+        <div className={`flex w-0 relative h-2/5
         transition-[width] duration-500 ease-in-out ${showFilter ? 'w-1/5' : 'w-0'}`}>
-            <div className={`flex w-full h-full bg-white  ${showFilter ? 'border-r-4 border-t-4 border-b-4 border-amber-300 rounded-md overflow-visible' : 'overflow-hidden'}`}>
-                <h2 className="text-3xl">Category</h2>
-                <ul className="list-disc">
-                    <li>Category 1</li>
-                    <li>Category 2</li>
-                    <li>Category 3</li>
-                    <li>Category 4</li>
+            <div className={`flex flex-col w-full h-full bg-white  ${showFilter ? 'border-r-4 border-t-4 border-b-4 border-amber-300 rounded-md overflow-visible' : 'overflow-hidden'}
+            gap-4`}>
+                <h1 className="text-4xl text-center">Filters</h1>
+                <h2 className="text-3xl font-bold">Categories</h2>
+                <ul className="flex flex-col divide-y divide-gray-300 gap-4 justify-center">
+                    {category.map((item, i) => {
+                    return (
+                        <div className="flex flex-row items-center justify-start gap-2" key={i}>
+                        <input
+                            type="checkbox"
+                            id={`cat-${i}`} 
+                            className="w-4 h-4 cursor-pointer"
+                        />
+                        <label
+                            htmlFor={`cat-${i}`}
+                            className="text-2xl cursor-pointer"
+                        >
+                            {item}
+                        </label>
+                        </div>
+                    );
+                    })}
                 </ul>
+                <h2 className="text-3xl font-bold">Price</h2>
+                <PriceSlider/>
+                <h2 className="text-3xl font-bold">Rating</h2>
             </div>
             <img className="absolute left-[88%] bottom-1/2 w-12 h-12 cursor-pointer hover:scale-120" src={arrowleft}
             onClick={() => handleFilterClick()}></img>
@@ -74,7 +103,7 @@ function ShoppingSection({products, loading, error}: Fetching) {
         </div>
 
 
-        <div className="grid grid-cols-4 gap-24 p-32 w-full">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-24 p-32 w-full">
             {products.map((item, i) => {
                 return (
                     <ItemCard key={i} item={item}></ItemCard>

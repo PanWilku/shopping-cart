@@ -4,7 +4,7 @@
 
 
 .card {
-  @apply bg-white shadow-2xl rounded-lg p-4 aspect-2/3 w-full h-120 flex flex-col justify-between;
+  @apply bg-white shadow-2xl rounded-lg p-4 aspect-2/3 w-full min-w-60 h-120 flex flex-col justify-between;
 }
 
 .navbar {
