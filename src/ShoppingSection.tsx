@@ -2,9 +2,8 @@ import ItemCard from "./ItemCard";
 import type { Fetching } from './types/fetching'
 import arrowright from "../public/arrow-right.svg"
 import arrowleft from "../public/arrow-left.svg"
-import { useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import PriceSlider from "./PriceSlider";
-
 
 
 
@@ -14,6 +13,25 @@ function ShoppingSection({products, loading, error}: Fetching) {
     const [hidden, setHidden] = useState(true);
 
     const [category, setCategory] = useState<string[]>([]);
+
+    const prices = products.map(p => p.price);
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+
+    const [filterPrice, setFilterPrice] = useState<number[]>([min, max]);
+    const [filterCategory, setFilterCategory] = useState<string[]>([]);
+    const [filterRating, setFilterRating] = useState<number[]>([0, 5]);
+    const [applyFilter, setApplyFilter] = useState<number[]>([min, max]);
+
+    // wait for data to arrive and update min max as its infinite initially
+    useEffect(() => {
+      setFilterPrice([min, max]);
+      setApplyFilter([min, max]);
+    }, [min, max]);
+
+
+
+    //category filter and price filter
     products.map((item) => {
         if(category.includes(item.category)) {
             return;
@@ -34,6 +52,19 @@ function ShoppingSection({products, loading, error}: Fetching) {
         setHidden(!hidden);
     }
     }
+
+
+    function handleApplyFilter() {
+
+        setApplyFilter(filterPrice);
+    }
+
+    //filters products based on the price
+    const filteredProducts = useMemo(() => {
+      const [low, high] = applyFilter;
+      console.log(low, high);
+      return products.filter(item => item.price >= low && item.price <= high);
+    }, [products, applyFilter]);
 
 
     if(loading) {
@@ -94,8 +125,9 @@ function ShoppingSection({products, loading, error}: Fetching) {
                     })}
                 </ul>
                 <h2 className="text-3xl font-bold">Price</h2>
-                <PriceSlider/>
+                <PriceSlider setfilter={setFilterPrice} min={min} max={max}/>
                 <h2 className="text-3xl font-bold">Rating</h2>
+                <button className="text-3xl font-bold" onClick={handleApplyFilter}>Search</button>
             </div>
             <img className="absolute left-[88%] bottom-1/2 w-12 h-12 cursor-pointer hover:scale-120" src={arrowleft}
             onClick={() => handleFilterClick()}></img>
@@ -104,7 +136,7 @@ function ShoppingSection({products, loading, error}: Fetching) {
 
 
         <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-24 p-32 w-full">
-            {products.map((item, i) => {
+            {filteredProducts.map((item, i) => {
                 return (
                     <ItemCard key={i} item={item}></ItemCard>
                 )

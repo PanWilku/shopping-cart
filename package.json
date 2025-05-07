@@ -12,8 +12,10 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.5",
+    "rc-slider": "^11.1.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-range-slider-input": "^3.2.1",
     "tailwindcss": "^4.1.5"
   },
   "devDependencies": {
