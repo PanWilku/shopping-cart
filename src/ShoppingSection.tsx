@@ -19,25 +19,41 @@ function ShoppingSection({products, loading, error}: Fetching) {
     const max = Math.max(...prices);
 
     const [filterPrice, setFilterPrice] = useState<number[]>([min, max]);
+    const [applyPrice, setApplyPrice] = useState<number[]>([min, max]);
+
     const [filterCategory, setFilterCategory] = useState<string[]>([]);
+    const [applyCategory, setApplyCategory] = useState<string[]>([]);
+
     const [filterRating, setFilterRating] = useState<number[]>([0, 5]);
-    const [applyFilter, setApplyFilter] = useState<number[]>([min, max]);
+    const [applyRating, setApplyRating] = useState<number[]>([0, 5]);
+
 
     // wait for data to arrive and update min max as its infinite initially
     useEffect(() => {
       setFilterPrice([min, max]);
-      setApplyFilter([min, max]);
+      setApplyPrice([min, max]);
     }, [min, max]);
 
+    useEffect(() => {
+        const uniqueCats = Array.from(new Set(products.map(p => p.category)));
+        setCategory(uniqueCats);
+      }, [products]);
+
+    function handleApplyFilterCategory() {
+        const checkboxes = document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+        const checkedCategories: string[] = [];
+
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                checkedCategories.push(checkbox.value);
+                console.log(checkbox.value);
+            }
+
+        });
+        setFilterCategory(checkedCategories);
+    }
 
 
-    //category filter and price filter
-    products.map((item) => {
-        if(category.includes(item.category)) {
-            return;
-        } else {
-            setCategory([...category, item.category]);
-        }});
 
 
     function handleFilterClick() {
@@ -55,16 +71,27 @@ function ShoppingSection({products, loading, error}: Fetching) {
 
 
     function handleApplyFilter() {
-
-        setApplyFilter(filterPrice);
+        setApplyPrice(filterPrice);
+        setApplyCategory(filterCategory);
+        setApplyRating(filterRating);
     }
 
     //filters products based on the price
     const filteredProducts = useMemo(() => {
-      const [low, high] = applyFilter;
+      const [low, high] = applyPrice;
       console.log(low, high);
-      return products.filter(item => item.price >= low && item.price <= high);
-    }, [products, applyFilter]);
+      const checkedCategories = filterCategory;
+      console.log(checkedCategories);
+      return products.filter((item => {
+        const price = item.price;
+        const rating = item.rating.rate;
+        const category = item.category;
+        const isInPriceRange = price >= low && price <= high;
+        const isInCategory = checkedCategories.length === 0 || checkedCategories.includes(category);
+        const isInRatingRange = rating >= applyRating[0] && rating <= applyRating[1];
+        return isInPriceRange && isInCategory && isInRatingRange;
+      }));
+    }, [products, applyPrice, applyCategory, applyRating]);
 
 
     if(loading) {
@@ -108,11 +135,13 @@ function ShoppingSection({products, loading, error}: Fetching) {
                 <ul className="flex flex-col divide-y divide-gray-300 gap-4 justify-center">
                     {category.map((item, i) => {
                     return (
-                        <div className="flex flex-row items-center justify-start gap-2" key={i}>
+                        <div className="flex flex-row items-center justify-start gap-2" key={i}
+                        onClick={handleApplyFilterCategory}>
                         <input
                             type="checkbox"
                             id={`cat-${i}`} 
                             className="w-4 h-4 cursor-pointer"
+                            value={item}
                         />
                         <label
                             htmlFor={`cat-${i}`}
