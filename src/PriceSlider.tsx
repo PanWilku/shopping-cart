@@ -32,7 +32,7 @@ export default function PriceSlider({
 
       {/* the two-thumb slider */}
       <RangeSlider
-        className="w-full"
+        className="w-full "
         min={min}
         max={max}
         step={0.01}
