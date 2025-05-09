@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Product } from "./types/fetching";
 import StarRating from "./StarRating";
+import { Dispatch, SetStateAction } from "react";
+import { CartValues } from "./App";
 
-type ItemCardProps = { item: Product };
+type ItemCardProps = { item: Product, setCartItems: Dispatch<SetStateAction<CartValues[]>> };
 
-export default function ItemCard({ item }: ItemCardProps) {
+export default function ItemCard({ item, setCartItems: setCartQuantity }: ItemCardProps) {
 
 
   const [quantity, setQuantity] = useState("1");
@@ -32,6 +34,37 @@ export default function ItemCard({ item }: ItemCardProps) {
     }
   }
 
+  function handleAddToCart() {
+    const qty = parseInt(quantity, 10);
+    const itemToAdd = {
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      quantity: qty,
+    };
+    // Check if the item already exists in the cart
+    // If it does, update the quantity
+    // If it doesn't, add the item to the cart
+    setCartQuantity(prev => {
+      const exists = prev.find(i => i.id === itemToAdd.id);
+  
+      if (exists) {
+
+        return prev.map(i =>
+          i.id === itemToAdd.id
+            ? { 
+                ...i,                         
+                quantity: i.quantity + qty     
+              }
+            : i                             
+        );
+      } else {
+
+        return [...prev, itemToAdd];
+      }
+    });
+  }
+
   return (
     <div
       className="card group relative overflow-hidden"
@@ -55,7 +88,7 @@ export default function ItemCard({ item }: ItemCardProps) {
              type="number" onChange={(e) => handleInput(e)} value={quantity}></input>
             <button className="mr-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex" onClick={handleIncrease}>+</button>
           </div>
-          <button className="text-lg border-2 p-2 rounded-md bg-lime-500">Add to Cart</button>
+          <button onClick={() => handleAddToCart()} className="text-lg border-2 p-2 rounded-md bg-lime-500">Add to Cart</button>
         </div>
     </div>
   );

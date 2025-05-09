@@ -2,10 +2,21 @@ import ItemCard from "./ItemCard";
 import type { Fetching } from './types/fetching'
 import arrowright from "../public/arrow-right.svg"
 import arrowleft from "../public/arrow-left.svg"
-import { useMemo, useState, useEffect, useRef } from "react";
+import { useMemo, useState, useEffect, useRef, SetStateAction } from "react";
 import PriceSlider from "./PriceSlider";
+import { CartValues } from "./App";
+import type { Dispatch } from "react";
 
-function ShoppingSection({ products, loading, error }: Fetching) {
+
+interface ShoppingSectionProps {
+  products: Fetching['products']
+  loading: Fetching['loading']
+  error: Fetching['error']
+  setCartItems: Dispatch<SetStateAction<CartValues[]>>
+}
+
+
+function ShoppingSection({ products, loading, error, setCartItems: setCartItems }: ShoppingSectionProps) {
   const categoryPanelRef = useRef<HTMLUListElement>(null);
   const ratingPanelRef = useRef<HTMLDivElement>(null);
 
@@ -193,7 +204,7 @@ const filteredProducts = useMemo(() => {
 
         <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-24 p-32 w-full">
           {filteredProducts.map((item, i) => (
-            <ItemCard key={i} item={item} />
+            <ItemCard key={i} item={item} setCartItems={setCartItems} />
           ))}
         </div>
       </div>

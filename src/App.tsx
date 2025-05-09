@@ -5,18 +5,26 @@ import ShoppingSection from './ShoppingSection'
 import type { Fetching } from './types/fetching'
 import Footer from './Footer'
 
+
+export interface CartValues {
+  id: number
+  title: string
+  price: number
+  quantity: number
+}
+
 function App() {
 
+    const [cartItems, setCartItems] = useState<CartValues[]>([]);
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
-    const fetchingData: Fetching = {
-      products,
-      loading,
-      error
-    }
+    const [cartTotalQuantity, setCartTotalQuantity] = useState<number>(0)
 
-    console.log(products)
+    useEffect(() => {
+      const total = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      setCartTotalQuantity(total);
+    }, [cartItems]);
 
   useEffect(() => {
   
@@ -42,9 +50,9 @@ function App() {
   return (
     <>
       <div className='flex flex-col max-w-[1920px] w-full bg-amber-200 items-center min-h-screen'>
-        <NavBar></NavBar>
+        <NavBar cartTotalQuantity={cartTotalQuantity}></NavBar>
         <Carousel></Carousel>
-        <ShoppingSection {...fetchingData}></ShoppingSection>
+        <ShoppingSection products={products} loading={loading} error={error} setCartItems={setCartItems}></ShoppingSection>
         <Footer></Footer>
       </div>
     </>
