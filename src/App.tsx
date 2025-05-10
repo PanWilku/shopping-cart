@@ -1,61 +1,83 @@
+// App.tsx
 import { useState, useEffect } from 'react'
-import NavBar from './NavBar'
+import { Routes, Route } from 'react-router-dom'
+
+import Layout from './Layout'
 import Carousel from './Carousel'
 import ShoppingSection from './ShoppingSection'
-import type { Fetching } from './types/fetching'
-import Footer from './Footer'
+import About from './About'
+import type { CartValues } from './types/fetching'
+import Services from './Services'
+import Contact from './Contact'
+import Cart from './Cart'
 
-
-export interface CartValues {
-  id: number
-  title: string
-  price: number
-  quantity: number
-}
 
 function App() {
-
-    const [cartItems, setCartItems] = useState<CartValues[]>([]);
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-    const [cartTotalQuantity, setCartTotalQuantity] = useState<number>(0)
-
-    useEffect(() => {
-      const total = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-      setCartTotalQuantity(total);
-    }, [cartItems]);
+  const [cartItems, setCartItems] = useState<CartValues[]>([])
+  const [products, setProducts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [cartTotalQuantity, setCartTotalQuantity] = useState(0)
 
   useEffect(() => {
-  
+    setCartTotalQuantity(
+      cartItems.reduce((sum, item) => sum + item.quantity, 0)
+    )
+  }, [cartItems])
+
+  useEffect(() => {
     fetch('https://fakestoreapi.com/products')
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((response) => {
-      setProducts(response);
-    })
-    .catch((error) => {
-      setError(error)
-    })
-    .finally(() => {
-      setLoading(false)
-    })
+      .then(r => {
+        if (!r.ok) throw new Error('Network response was not ok')
+        return r.json()
+      })
+      .then(setProducts)
+      .catch(e => setError(e.message))
+      .finally(() => setLoading(false))
   }, [])
 
-
   return (
-    <>
-      <div className='flex flex-col max-w-[1920px] w-full bg-amber-200 items-center min-h-screen'>
-        <NavBar cartTotalQuantity={cartTotalQuantity}></NavBar>
-        <Carousel></Carousel>
-        <ShoppingSection products={products} loading={loading} error={error} setCartItems={setCartItems}></ShoppingSection>
-        <Footer></Footer>
-      </div>
-    </>
+    <Routes>
+      {/* layout that displays on every page */}
+      <Route
+        path="/"
+        element={<Layout cartTotalQuantity={cartTotalQuantity} />}
+      >
+        <Route
+          index
+          element={
+            <>
+              <Carousel />
+              <ShoppingSection
+                products={products}
+                loading={loading}
+                error={error}
+                setCartItems={setCartItems}
+              />
+            </>
+          }
+        />
+
+        <Route path="about" element={<About />} />
+        <Route path="services" element={<Services />} />
+        <Route path="contact" element={<Contact />} />
+        <Route
+          path="cart"
+          element={
+            <Cart
+              cartItems={cartItems}/>} />
+        </Route>
+        {/* error route */}
+        <Route
+          path="*"
+          element={
+            <div className="flex flex-col items-center justify-center h-screen">
+              <h1 className="text-4xl font-bold">404 Not Found</h1>
+              <p className="mt-4 text-lg">The page you are looking for does not exist.</p>
+            </div>
+          }
+        />
+    </Routes>
   )
 }
 

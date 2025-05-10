@@ -13,3 +13,10 @@ category: string
 image:    string
 rating:   { rate: number; count: number }
 }
+
+export interface CartValues {
+  id: number
+  title: string
+  price: number
+  quantity: number
+}

@@ -1,26 +1,45 @@
 import cart from "../public/cart.svg";
+import { Link } from "react-router-dom";
 
 type NavBarProps = {
   cartTotalQuantity: number
 }
 
-function NavBar({cartTotalQuantity}: NavBarProps) {
+export default function NavBar({ cartTotalQuantity }: NavBarProps) {
   return (
     <nav className="navbar">
-      <div className="navbar__logo">MyApp</div>
-      <ul className="navbar__links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
+      <div className="navbar__logo">
+        <Link to="/" className="text-white no-underline">MyApp</Link>
+      </div>
+      <ul className="navbar__links flex items-center gap-4">
+        <li>
+          <Link to="/" className="hover:underline">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to="/about" className="hover:underline">
+            About
+          </Link>
+        </li>
+        <li>
+          <Link to="/services" className="hover:underline">
+            Services
+          </Link>
+        </li>
+        <li>
+          <Link to="/contact" className="hover:underline">
+            Contact
+          </Link>
+        </li>
         <li className="relative inline-block">
-          <a href="#cart">
+          <Link to="/cart">
             <img
               src={cart}
               className="w-12 bg-amber-300 rounded-md"
               alt="Cart"
             />
-          </a>
+          </Link>
           <span
             className="
               absolute top-0 right-0
@@ -35,11 +54,9 @@ function NavBar({cartTotalQuantity}: NavBarProps) {
             ) : (
               cartTotalQuantity
             )}
-
           </span>
         </li>
       </ul>
     </nav>
   );
 }
-export default NavBar;

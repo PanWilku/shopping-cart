@@ -4,7 +4,7 @@ import arrowright from "../public/arrow-right.svg"
 import arrowleft from "../public/arrow-left.svg"
 import { useMemo, useState, useEffect, useRef, SetStateAction } from "react";
 import PriceSlider from "./PriceSlider";
-import { CartValues } from "./App";
+import type { CartValues } from "./types/fetching";
 import type { Dispatch } from "react";
 
 
