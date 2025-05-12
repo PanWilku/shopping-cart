@@ -11,7 +11,7 @@ export default function NavBar({ cartTotalQuantity }: NavBarProps) {
       <div className="navbar__logo">
         <Link to="/" className="text-white no-underline">MyApp</Link>
       </div>
-      <ul className="navbar__links flex items-center gap-4">
+      <ul className="navbar__links items-center gap-4">
         <li>
           <Link to="/" className="hover:underline">
             Home

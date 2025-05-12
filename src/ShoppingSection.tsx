@@ -108,7 +108,7 @@ const filteredProducts = useMemo(() => {
     <div className="shopping-section">
       <h2 className="text-5xl">Shopping Section</h2>
 
-      <div className="flex flex-row w-full h-full">
+      <div className="flex flex-col lg:flex-row w-full h-full">
         {hidden && (
           <div className="w-12 h-full relative flex">
             <div
@@ -132,8 +132,8 @@ const filteredProducts = useMemo(() => {
         >
           <div
             className={`
-              flex flex-col w-full h-full bg-white
-              ${showFilter ? 'border-r-4 border-t-4 border-b-4 border-amber-300 rounded-md overflow-visible' : 'overflow-hidden'}
+              flex flex-col w-full h-0 lg:h-full bg-white
+              ${showFilter ? 'border-r-4 h-full border-t-4 border-b-4 border-amber-300 rounded-md overflow-visible' : 'overflow-hidden'}
               gap-4
             `}
           >

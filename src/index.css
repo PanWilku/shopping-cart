@@ -8,7 +8,7 @@
 }
 
 .navbar {
-  @apply flex w-full text-2xl h-32 bg-gray-800 text-white p-4 justify-between items-center;
+  @apply flex w-full text-xl lg:text-2xl h-32 bg-gray-800 text-white p-4 justify-between items-center;
 }
 
 .navbar__links {
