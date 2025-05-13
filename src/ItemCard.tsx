@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Product } from "./types/fetching";
 import StarRating from "./StarRating";
 import { Dispatch, SetStateAction } from "react";
-import { CartValues } from "./App";
+import type { CartValues } from "./types/fetching";
 
 type ItemCardProps = { item: Product, setCartItems: Dispatch<SetStateAction<CartValues[]>> };
 
@@ -41,6 +41,7 @@ export default function ItemCard({ item, setCartItems: setCartQuantity }: ItemCa
       title: item.title,
       price: item.price,
       quantity: qty,
+      image: item.image
     };
     // Check if the item already exists in the cart
     // If it does, update the quantity

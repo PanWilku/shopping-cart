@@ -36,6 +36,7 @@ function App() {
       .finally(() => setLoading(false))
   }, [])
 
+
   return (
     <Routes>
       {/* layout that displays on every page */}

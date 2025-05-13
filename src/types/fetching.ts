@@ -19,4 +19,5 @@ export interface CartValues {
   title: string
   price: number
   quantity: number
+  image: any
 }
