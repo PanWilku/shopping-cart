@@ -2,11 +2,20 @@ import { CartValues } from "./types/fetching";
 import { useEffect, useState } from "react";
 
 type CartProps = {
-    cartItems: CartValues[]
+    cartItems: CartValues[],
+    setCartItems: React.Dispatch<React.SetStateAction<CartValues[]>>
+}
+
+type itemProps = {
+    id: number,
+    title: string,
+    price: number,
+    quantity: number,
+    image: string
 }
 
 
-function Cart( {cartItems}: CartProps ) {
+function Cart( {cartItems, setCartItems}: CartProps ) {
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [shipping, setShipping] = useState(0);
@@ -20,6 +29,13 @@ function Cart( {cartItems}: CartProps ) {
         setTotalPrice(sum);
         setShipping(sum > 100 ? 0 : 15);
       }, [cartItems]);
+
+    function handleDeleteItem(item: itemProps) {
+        //filter out the item from cartItems
+        const newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
+        //set the new cartItems
+        setCartItems(newCartItems);
+    }
 
 
     return (
@@ -48,7 +64,7 @@ function Cart( {cartItems}: CartProps ) {
                                 <p>{item.price * item.quantity}$</p>
                             </div>
                             <div className="flex w-1/10 justify-center gap-4">
-                                <button className="bg-red-400 p-4 rounded-md cursor-pointer hover:bg-red-500 transform transition duration-500 ease-in-out">Delete</button>
+                                <button onClick={() => handleDeleteItem(item)} className="bg-red-400 p-4 rounded-md cursor-pointer hover:bg-red-500 transform transition duration-500 ease-in-out">Delete</button>
                             </div>
                         </div>
                     ))}

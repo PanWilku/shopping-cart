@@ -66,7 +66,7 @@ function App() {
           path="cart"
           element={
             <Cart
-              cartItems={cartItems}/>} />
+              cartItems={cartItems} setCartItems={setCartItems}/>} />
         </Route>
         {/* error route */}
         <Route
