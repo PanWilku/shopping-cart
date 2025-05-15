@@ -37,72 +37,121 @@ function Cart( {cartItems, setCartItems}: CartProps ) {
         setCartItems(newCartItems);
     }
 
+    function handleMinus(item: itemProps) {
+        const newItems = cartItems.map((cartItem) => {
+            if (cartItem.id === item.id && cartItem.quantity > 1) {
+                return {
+                    ...cartItem,
+                    quantity: cartItem.quantity - 1,
+                };
+            }
+            return cartItem;
+        })
+        setCartItems(newItems);
+    }
+
+    function handlePlus(item: itemProps) {
+        const newItems = cartItems.map((cartItem) => {
+            if (cartItem.id === item.id && cartItem.quantity < 999) {
+                return {
+                    ...cartItem,
+                    quantity: cartItem.quantity + 1,
+                };
+            }
+            return cartItem;
+        })
+        setCartItems(newItems);
+    }
+
 
     return (
-        <div className="flex w-full h-full border-b-3 items-center justify-center min-h-screen bg-amber-300">
-            <div className="flex flex-col flex-grow w-3/4 h-full bg-white">
+        <div className="flex md:flex-row flex-col w-full h-full border-b-3 items-center justify-center min-h-screen bg-amber-300">
+            <div className="flex flex-col flex-grow w-full md:w-3/4 h-full bg-white">
                 <div className="flex w-full p-24 text-4xl font-bold">
                     Your Order
                 </div>
                 <div className="flex w-full justify-between h-16 text-2xl bg-gray-800 text-white">
-                    <div className="flex w-1/2 items-center justify-center">Name</div>
-                    <div className="flex w-1/5 items-center justify-end">Quantity</div>
-                    <div className="flex w-1/5 items-center justify-center">Price</div>
-                    <div className="flex w-1/10 items-center justify-center"></div>
+                    <div className="flex md:w-1/2 w-4/10 items-center justify-center">Name</div>
+                    <div className="flex md:w-1/5 w-2/10 items-center justify-end">Quantity</div>
+                    <div className="flex md:w-1/5 w-3/10 items-center justify-center">Price</div>
+                    <div className="flex md:w-1/10 w-1/10 items-center justify-center"></div>
                 </div>
-                <div className="flex flex-col w-full p-4 h-full text-2xl">
+                <div className="flex flex-col w-full p-4 h-full md:text-2xl text-xl">
                     {cartItems.map((item, i) => (
-                        <div key={i} className="flex w-full p-4 items-center border-b-2 min-h-48">
-                            <div className="flex w-1/2 gap-4 items-center">
-                                <img src={item.image} className="w-32"></img>
-                                {item.title}
+                        <div key={i} className="flex w-full p-4 items-center border-b-2 min-h-48 gap-4 md:gap-0">
+                            <div className="flex lg:w-1/2 flex-1 gap-4 items-center">
+                                <img src={item.image} className="lg:w-32 w-26"></img>
+                                <p className="line-clamp-4">{item.title}</p>
                             </div>
-                            <div className="flex w-1/5 justify-end">
-                                <p>{item.quantity}</p>
+                            <div className="flex flex-1">
+                                <div className="flex w-full justify-end items-center gap-2">
+                                    <button  onClick={() => handleMinus(item)} className="w-6 h-6 flex justify-center items-center border-1 border-black hover:bg-gray-800 hover:text-white
+                                     transform duration-500 ease-in-out cursor-pointer">-</button>
+                                    {item.quantity}
+                                    <button onClick={() => handlePlus(item)} className="w-6 h-6 flex justify-center items-center border-1 border-black hover:bg-gray-800 hover:text-white
+                                     transform duration-500 ease-in-out cursor-pointer">+</button>
+                                </div>
                             </div>
-                            <div className="flex w-1/5 justify-center gap-4">
-                                <p>{item.price * item.quantity}$</p>
+                            <div className="flex flex-1 justify-center gap-4">
+                                <p>{(item.price * item.quantity).toFixed(2)}$</p>
                             </div>
-                            <div className="flex w-1/10 justify-center gap-4">
-                                <button onClick={() => handleDeleteItem(item)} className="bg-red-400 p-4 rounded-md cursor-pointer hover:bg-red-500 transform transition duration-500 ease-in-out">Delete</button>
+                            <div className="flex flex-1 justify-center gap-4">
+                                <button onClick={() => handleDeleteItem(item)} className="bg-red-400 lg:p-4 p-2 rounded-md cursor-pointer
+                                 hover:bg-red-500 transform transition duration-500 ease-in-out">Delete</button>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="flex flex-col flex-grow w-1/4 h-full border-l-3">
-            <div className="flex w-full p-4 text-2xl">
-                <div className="flex w-1/2 justify-end">
-                    <p>Items price:</p>
+            <div className="flex flex-col flex-grow w-full md:w-1/3 lg:w-1/4 h-full">
+            {/* Items price */}
+            <div className="flex flex-row w-full p-4 text-xl md:text-2xl gap-2 md:gap-4">
+                <div className="flex-none md:flex-1 md:justify-end flex justify-between">
+                <p className="text-right">Items price:</p>
                 </div>
-                <div className="flex w-1/2 justify-end">
-                    <p>{totalPrice.toFixed(2)}$</p>
-                </div>
-            </div>
-            <div className="flex w-full p-4 text-2xl">
-                <div className="flex w-1/2 justify-end">
-                    <p>Shipping:</p>
-                </div>
-                <div className="flex w-1/2 justify-end">
-                    <p>{shipping === 0 ? "FREE" : `${shipping}$`}</p>
+                <div className="flex-1 flex justify-end lg:items-center">
+                <p className="text-right">{totalPrice.toFixed(2)}$</p>
                 </div>
             </div>
-            <div className="flex w-full p-4 text-2xl">
-                <div className="flex w-1/2 justify-end">
-                    <p>Total:</p>
+
+            {/* Shipping */}
+            <div className="flex flex-row w-full p-4 text-xl md:text-2xl gap-2 md:gap-4">
+                <div className="flex-none md:flex-1 md:justify-end flex justify-between">
+                <p className="text-right">Shipping:</p>
                 </div>
-                <div className="flex w-1/2 justify-end">
-                    <p>{(totalPrice + shipping).toFixed(2)}$</p>
-                </div>
-            </div>
-                <div className="flex w-full h-full">
-                    <div className="flex w-full">
-                        <button className="flex w-full h-16 rounded-md items-center p-4 m-8 text-2xl
-                         justify-center border-2 hover:bg-gray-800 hover:text-white transform
-                          transition duration-500 ease-in-out">Place Order</button>
-                    </div>
+                <div className="flex-1 flex justify-end items-center">
+                <p className="text-right">
+                    {shipping === 0 ? "FREE" : `${shipping}$`}
+                </p>
                 </div>
             </div>
+
+            {/* Total */}
+            <div className="flex flex-row w-full p-4 text-xl md:text-2xl gap-2 md:gap-4">
+                <div className="flex-none md:flex-1 md:justify-end flex justify-between">
+                <p className="text-right">Total:</p>
+                </div>
+                <div className="flex-1 flex justify-end items-center">
+                <p className="text-right">
+                    {(totalPrice + shipping).toFixed(2)}$
+                </p>
+                </div>
+            </div>
+
+            {/* Place Order button */}
+            <div className="p-4">
+                <button
+                className="
+                    w-full h-16 rounded-md text-2xl
+                    border-2 border-gray-800
+                    hover:bg-gray-800 hover:text-white
+                    transition duration-500 ease-in-out
+                ">
+                Place Order
+                </button>
+            </div>
+            </div>
+
         </div>
     );
 }
