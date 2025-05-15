@@ -65,16 +65,16 @@ function Cart( {cartItems, setCartItems}: CartProps ) {
 
 
     return (
-        <div className="flex md:flex-row flex-col w-full h-full border-b-3 items-center justify-center min-h-screen bg-amber-300">
+        <div className="flex md:flex-row flex-col w-full h-full items-center justify-center min-h-screen bg-amber-300">
             <div className="flex flex-col flex-grow w-full md:w-3/4 h-full bg-white">
                 <div className="flex w-full p-24 text-4xl font-bold">
                     Your Order
                 </div>
                 <div className="flex w-full justify-between h-16 text-2xl bg-gray-800 text-white">
-                    <div className="flex md:w-1/2 w-4/10 items-center justify-center">Name</div>
-                    <div className="flex md:w-1/5 w-2/10 items-center justify-end">Quantity</div>
-                    <div className="flex md:w-1/5 w-3/10 items-center justify-center">Price</div>
-                    <div className="flex md:w-1/10 w-1/10 items-center justify-center"></div>
+                    <div className="flex md:w-1/4 flex-1 items-center justify-center">Name</div>
+                    <div className="flex md:w-1/4 flex-1 items-center justify-end">Quantity</div>
+                    <div className="flex md:w-1/4 flex-1 items-center justify-center">Price</div>
+                    <div className="flex md:w-1/4 flex-1 items-center justify-center"></div>
                 </div>
                 <div className="flex flex-col w-full p-4 h-full md:text-2xl text-xl">
                     {cartItems.map((item, i) => (
