@@ -10,6 +10,7 @@ export default function ItemCard({ item, setCartItems: setCartQuantity }: ItemCa
 
 
   const [quantity, setQuantity] = useState("1");
+  const [open, SetOpen] = useState(false)
 
   function handleIncrease() {
     setQuantity((prev) => (parseInt(prev) + 1).toString());
@@ -71,25 +72,26 @@ export default function ItemCard({ item, setCartItems: setCartQuantity }: ItemCa
       className="card group relative overflow-hidden"
     >
       <img
+        onClick={() => SetOpen(o => !o)}
         src={item.image}
         alt={item.title}
         className="w-full h-3/4 object-contain"
       />
-      <div className="gap-2 flex flex-col items-center justify-center h-1/4 w-full">
+      <div onClick={() => SetOpen(o => !o)} className="gap-2 flex flex-col items-center justify-center h-1/4 w-full">
         <h2 className="line-clamp-2">{item.title}</h2>
         <StarRating rating={item.rating.rate} />
         <p>{item.price}$</p>
       </div>
 
 
-        <div className="card-overlay flex flex-col gap-2">
+        <div className={`card-overlay flex flex-col gap-2 ${open ? "h-1/4" : ""}`}>
           <div className="flex w-full items-center gap-4 justify-between">
-            <button className="ml-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex" onClick={handleDecrease}>-</button>
+            <button className="ml-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex cursor-pointer" onClick={handleDecrease}>-</button>
             <input className="flex w-24 justify- text-center focus:outline-none border-2 rounded-md"
              type="number" onChange={(e) => handleInput(e)} value={quantity}></input>
-            <button className="mr-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex" onClick={handleIncrease}>+</button>
+            <button className="mr-4 text-4xl border-2 w-8 h-8 rounded-md justify-center items-center flex cursor-pointer" onClick={handleIncrease}>+</button>
           </div>
-          <button onClick={() => handleAddToCart()} className="text-lg border-2 p-2 rounded-md bg-lime-500">Add to Cart</button>
+          <button onClick={() => handleAddToCart()} className="text-lg border-2 p-2 rounded-md bg-lime-500 cursor-pointer">Add to Cart</button>
         </div>
     </div>
   );
