@@ -65,7 +65,7 @@ function Cart( {cartItems, setCartItems}: CartProps ) {
 
 
     return (
-        <div className="flex md:flex-row flex-col w-full h-screen items-center justify-center min-h-screen bg-amber-300">
+        <div className="flex md:flex-row flex-col w-full h-screen items-center justify-center min-h-screen bg-white">
             <div className="flex flex-col flex-grow w-full md:w-3/4 h-screen bg-white overflow-y-auto">
                 <div className="flex w-full p-24 text-4xl font-bold">
                     Your Order
@@ -103,7 +103,7 @@ function Cart( {cartItems, setCartItems}: CartProps ) {
                     ))}
                 </div>
             </div>
-            <div className="flex flex-col flex-grow w-full md:w-1/3 lg:w-1/4 h-full">
+            <div className="flex bg-amber-300 flex-col flex-grow w-full md:w-1/3 lg:w-1/4 h-full">
             {/* Items price */}
             <div className="flex flex-row w-full p-4 text-xl md:text-2xl gap-2 md:gap-4">
                 <div className="flex-none md:flex-1 md:justify-end flex justify-between">
@@ -145,7 +145,7 @@ function Cart( {cartItems, setCartItems}: CartProps ) {
                     w-full h-16 rounded-md text-2xl
                     border-2 border-gray-800
                     hover:bg-gray-800 hover:text-white
-                    transition duration-500 ease-in-out
+                    transition duration-500 ease-in-out cursor-pointer
                 ">
                 Place Order
                 </button>

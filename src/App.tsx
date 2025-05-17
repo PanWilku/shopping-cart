@@ -10,6 +10,9 @@ import type { CartValues } from './types/fetching'
 import Services from './Services'
 import Contact from './Contact'
 import Cart from './Cart'
+import freeDelivery from './assets/free-delivery.png'
+import backpackPromo from './assets/backpack-promo.png'
+import longSleevePromo from './assets/long-sleeve-promo.png'
 
 
 function App() {
@@ -35,6 +38,7 @@ function App() {
       .catch(e => setError(e.message))
       .finally(() => setLoading(false))
   }, [])
+  const images = [freeDelivery, longSleevePromo, backpackPromo];
 
 
   return (
@@ -48,7 +52,7 @@ function App() {
           index
           element={
             <>
-              <Carousel />
+              <Carousel images={images}/>
               <ShoppingSection
                 products={products}
                 loading={loading}

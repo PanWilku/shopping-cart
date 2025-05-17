@@ -1,5 +1,6 @@
 import cart from "../public/cart.svg";
 import { Link } from "react-router-dom";
+import shopIcon from "../public/odin-shop-icon.png";
 
 type NavBarProps = {
   cartTotalQuantity: number
@@ -9,7 +10,9 @@ export default function NavBar({ cartTotalQuantity }: NavBarProps) {
   return (
     <nav className="navbar">
       <div className="navbar__logo">
-        <Link to="/" className="text-white no-underline">MyApp</Link>
+        <Link to="/" className="text-white no-underline">
+        <img src={shopIcon} className="object-contain w-24"></img>
+        </Link>
       </div>
       <ul className="navbar__links items-center gap-4">
         <li>
