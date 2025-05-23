@@ -65,8 +65,8 @@ function Cart( {cartItems, setCartItems}: CartProps ) {
 
 
     return (
-        <div className="flex md:flex-row flex-col w-full h-screen items-center justify-center min-h-screen bg-white">
-            <div className="flex flex-col flex-grow w-full md:w-3/4 h-screen bg-white overflow-y-auto">
+        <div className="flex md:flex-row flex-col w-full h-screen items-center justify-center min-h-screen bg-gray-200">
+            <div className="flex flex-col flex-grow w-full md:w-3/4 h-screen bg-gray-200 overflow-y-auto">
                 <div className="flex w-full p-24 text-4xl font-bold">
                     Your Order
                 </div>
