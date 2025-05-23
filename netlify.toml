@@ -1,9 +1,9 @@
 [build]
-  # ← set this to your actual output folder
-  publish = "dist"      # e.g. "build" for CRA, "dist" for Vite, etc.
+  command   = "npm run build"
+  publish   = "dist"
 
 [[redirects]]
-  from     = "/*"
-  to       = "/index.html"
-  status   = 200
-  force    = true        # optional, ensures it overrides any file match
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+  force  = true
